@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  creationTimestamp: null
   labels:
     app: nginx
   name: nginx
@@ -12,6 +13,7 @@ spec:
   strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: nginx
     spec:
@@ -22,9 +24,13 @@ spec:
       initContainers:
         - name: init-myservice
           image: busybox
-          command: ["sh", "-c", "echo $(BRANCH_NAME)"]
+          command: ["sh", "-c", "set -eux; echo $(BRANCH_NAME)"]
           env:
             - name: BRANCH_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.annotations['branch-name']
+            - name: NON_EXISTENT_ENV
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['non-existent-env']
