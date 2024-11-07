@@ -70,6 +70,8 @@ spec:
           - |
             sha=$(kubectl get po/$POD_NAME -n $POD_NAMESPACE -o jsonpath='{.metadata.annotations.github-sha}')
             echo $sha > /datashare/sha
+            branch=$(kubectl get po/$POD_NAME -n $POD_NAMESPACE -o jsonpath='{.metadata.annotations.branch-name}')
+            echo $branch > /datashare/branch
         volumeMounts:
           - name: datashare
             mountPath: /datashare
@@ -78,8 +80,8 @@ spec:
         command: ["sh", "-c"]
         args:
           - |
-            sha=$(cat /datashare/sha)
-            git clone -b $sha https://github.com/meysam81/argocd-per-pr-deployment
+            branch=$(cat /datashare/branch)
+            git clone -b $branch --depth 1 https://github.com/meysam81/argocd-per-pr-deployment
         resources: {}
         volumeMounts:
           - name: datashare
