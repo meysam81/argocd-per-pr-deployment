@@ -84,7 +84,7 @@ spec:
             branch=$(cat /datashare/branch)
             git clone -b $branch --depth 1 https://github.com/meysam81/argocd-per-pr-deployment
             ls -lha argocd-per-pr-deployment
-            cat argocd-per-pr-deployment/*
+            cat argocd-per-pr-deployment/app/*
         resources: {}
         volumeMounts:
           - name: datashare
