@@ -18,6 +18,15 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: nginx:1-alpine
-        name: nginx
-        resources: {}
+        - image: nginx:1-alpine
+          name: nginx
+          resources: {}
+      initContainers:
+        - name: init-myservice
+          image: busybox
+          command: ["sh", "-c", "echo $(BRANCH_NAME)"]
+          env:
+            - name: BRANCH_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['branch-name']
