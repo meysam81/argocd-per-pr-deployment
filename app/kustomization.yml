@@ -1,6 +1,2 @@
 resources:
   - deployment.yml
-
-  - name: dummy
-    literals:
-      - hello={{.head_sha}}
