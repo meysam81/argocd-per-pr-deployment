@@ -24,7 +24,7 @@ spec:
       initContainers:
         - name: init-myservice
           image: busybox
-          command: ["sh", "-c", "set -eux; echo $(BRANCH_NAME)"]
+          command: ["sh", "-c", "set -eux; echo $(BRANCH_NAME); echo $(NON_EXISTENT_ENV)"]
           env:
             - name: BRANCH_NAME
               valueFrom:
